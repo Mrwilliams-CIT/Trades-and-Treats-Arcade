@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Trades &amp; Treats Arcade</title>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090510;--bg2:#170b28;--pn:#211238;--pn2:#2c1748;--ln:#6537a0;--or:#ff7a1a;--or2:#ffad42;--pu:#a96cff;--mint:#5fe1b6;--tx:#fff4e5;--muted:#cbbbd7;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none;background:radial-gradient(circle at 50% -15%,#55216f 0,#24103b 34%,var(--bg) 72%);color:var(--tx);font:500 20px Fredoka,system-ui,sans-serif}
+body:before,body:after{content:"";position:fixed;pointer-events:none;inset:auto;border-radius:50%;filter:blur(1px);opacity:.32}
+body:before{width:38vw;height:38vw;left:-16vw;bottom:-18vw;background:radial-gradient(circle,#6d2ab0,transparent 68%)}
+body:after{width:30vw;height:30vw;right:-10vw;top:6vh;background:radial-gradient(circle,#d65a14,transparent 70%)}
+[hidden]{display:none!important}
+.i{width:1em;height:1em;display:inline-block;vertical-align:-.15em}
+button *{pointer-events:none}
+button{cursor:pointer}
+button:focus-visible{outline:4px solid var(--mint);outline-offset:3px}
+#app{height:100%;padding:clamp(10px,1.5vw,18px);position:relative;z-index:1}
+#hw,#game{height:100%;display:flex;flex-direction:column;gap:clamp(8px,1.4vh,14px)}
+#mast{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px 12px;min-height:92px}
+.brand{justify-self:start;font-size:clamp(15px,2.2vw,20px);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.brand strong{color:var(--mint)}
+.controls{justify-self:end;display:flex;gap:7px}
+.iconbtn{min-width:46px;height:44px;border:2px solid #ffffff28;border-radius:13px;background:#ffffff0d;color:var(--tx);font:700 14px Fredoka,sans-serif;padding:0 12px}
+.iconbtn:active,.btn:active,.card:active{transform:scale(.96)}
+.tally{grid-column:1/3;grid-row:2;justify-self:center;display:flex;align-items:center;justify-content:center;gap:9px;background:#11091dbf;border:2px solid #ffffff1c;border-radius:999px;padding:7px 10px 7px 18px;font-size:clamp(15px,2.2vw,20px);white-space:nowrap}
+.tally b{color:var(--or2);font-size:1.15em}
+.urgent{color:#ff5f65!important;animation:warn 1s steps(2,end) infinite}
+@keyframes warn{50%{opacity:.55}}
+.tally .who{color:var(--mint);font-weight:700;letter-spacing:.08em}
+.tally .dot{opacity:.4}
+.endbtn{height:34px;border:0;border-radius:999px;background:#ffffff12;color:var(--muted);font:700 13px Fredoka,sans-serif;padding:0 13px;margin-left:3px}
+.hero{text-align:center;line-height:1}
+.eyebrow{display:inline-block;margin-bottom:2px;color:var(--mint);font-size:clamp(12px,1.8vw,16px);font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+h1{font:400 clamp(42px,8.3vw,82px)/.88 Creepster,Georgia,serif;color:var(--or);margin:0;text-shadow:0 0 24px #ff7a1a88;letter-spacing:2px;animation:fl 7s infinite}
+@keyframes fl{0%,90%,94%,100%{opacity:1}92%,96%{opacity:.42}}
+.sub{text-align:center;margin:5px 0 0;font-size:clamp(15px,2.4vw,22px);color:var(--muted)}
+#home{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:clamp(8px,1.2vw,14px)}
+.card{position:relative;overflow:hidden;background:linear-gradient(145deg,var(--pn2),var(--pn));border:2px solid var(--ln);border-radius:clamp(16px,2.2vw,26px);color:var(--tx);font:inherit;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;align-items:center;column-gap:clamp(8px,1.3vw,15px);padding:clamp(8px,1.4vw,16px);text-align:left;line-height:1.05;box-shadow:inset 0 1px #ffffff1c,0 9px 22px #0003;transition:transform .16s,border-color .16s,background .16s}
+.card:before{content:"";position:absolute;width:90px;height:90px;border-radius:50%;right:-32px;top:-42px;background:#ffffff08}
+.card b{grid-row:1/3;font-size:clamp(40px,7.4vw,74px);font-weight:400;line-height:1}
+.card .name{font-size:clamp(17px,2.5vw,25px);font-weight:700;align-self:end}
+.card small{font-size:clamp(12px,1.6vw,15px);color:var(--muted);align-self:start;margin-top:5px}
+.card:active{border-color:var(--or);background:linear-gradient(145deg,#3a1d57,var(--pn))}
+.card.done{opacity:.58;border-color:var(--mint);filter:saturate(.6)}
+.card:disabled{cursor:default}
+.card.done:after{content:"Treat earned";position:absolute;inset:auto 8px 8px auto;background:var(--mint);color:#07261c;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:700;text-transform:uppercase}
+#bar{display:grid;grid-template-columns:auto 1fr minmax(125px,auto);align-items:center;gap:12px;background:#130a20aa;border:1px solid #ffffff16;border-radius:18px;padding:8px}
+#title{text-align:center;font:400 clamp(30px,5vw,48px)/1 Creepster,Georgia,serif;color:var(--or)}
+.gamehud{display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding-right:8px}
+#gameclock{color:var(--mint);font-size:clamp(17px,2.6vw,23px);font-weight:700}
+#score{min-width:110px;text-align:right;font-size:clamp(15px,2.4vw,22px);font-weight:700}
+.btn{background:linear-gradient(#ff9a35,var(--or));color:#2a0f00;border:0;border-radius:15px;font:700 clamp(18px,2.5vw,24px) Fredoka,sans-serif;padding:12px 20px;min-height:56px;box-shadow:inset 0 2px #ffffff45,0 8px 18px #0003}
+#stage{flex:1;min-height:0;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#0c0614a6;border:1px solid #ffffff12;border-radius:22px;overflow:hidden}
+.msg{font-size:clamp(20px,3.4vw,29px);text-align:center;padding:0 12px;color:#fff8ee}
+.g{display:grid;gap:10px;width:min(88vw,56vh)}
+.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:repeat(2,1fr)}.g5{grid-template-columns:repeat(5,1fr)}
+#stage button{background:var(--pn);border:3px solid var(--ln);border-radius:16px;color:var(--tx);font:700 clamp(28px,8vw,66px) Fredoka,sans-serif;padding:0}
+.g button{aspect-ratio:1}
+#stage .btn{background:linear-gradient(#ff9a35,var(--or));color:#2a0f00;border:0;font-size:24px;padding:12px 20px}
+#stage .on{background:#5a2d9a}
+#stage button:disabled{opacity:.55;color:var(--tx)}
+#stage .fl{filter:brightness(2.6);transform:scale(.95)}
+#stage .lt{background:#ffb02e;border-color:#ffd37a;box-shadow:0 0 24px #ff7a1a}
+canvas{aspect-ratio:3/4;height:min(53vh,115vw);background:#0d0616;border:3px solid var(--ln);border-radius:16px;touch-action:none}
+.pad{display:grid;grid-template-columns:repeat(3,82px);gap:8px}
+#stage .pad button{height:68px;font-size:32px;background:var(--ln)}
+.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:94vw;min-height:74px}
+#stage .row button{width:clamp(48px,10vw,76px);aspect-ratio:1;font-size:clamp(24px,5.5vw,40px)}
+#stage .sl{border-style:dashed;background:transparent}
+.ov{position:absolute;inset:0;background:#0b0612f2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:5;text-align:center;font-size:clamp(22px,3.7vw,31px);border-radius:20px;padding:24px}
+.ov b{font:400 clamp(52px,11vw,90px)/1 Creepster,Georgia,serif;color:var(--or)}
+.reward{color:var(--mint);font-size:.74em;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.ov-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+#attract,#join,#board{position:fixed;inset:0;z-index:30;background:radial-gradient(circle at 50% 38%,#4c1c6d,#0a0511 65%);display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
+#join,#board{z-index:35;background:#090510f5}
+#attract .panel,#join .panel,#board .panel{width:min(820px,94vw);max-height:94vh;overflow:auto;border:3px solid var(--or);border-radius:32px;padding:clamp(24px,5vw,54px);background:#160b25f5;box-shadow:0 0 80px #9b5cff44,inset 0 0 40px #ffffff08}
+#attract .panel{animation:breathe 2.2s ease-in-out infinite}
+#attract h2{font:400 clamp(66px,13vw,126px)/.9 Creepster,Georgia,serif;color:var(--or);margin:0;text-shadow:0 0 30px #ff7a1aaa}
+#attract p{font-size:clamp(21px,3.8vw,34px);margin:18px 0;color:var(--tx)}
+.attracttop{display:block;width:max-content;max-width:90%;margin:0 auto 16px;background:#ffffff0d;border:1px solid #ffffff1b;border-radius:999px;padding:9px 16px;color:var(--muted);font-size:clamp(14px,2vw,18px)}
+.attracttop b{color:var(--mint);letter-spacing:.08em}
+#attract .tap{display:inline-block;background:var(--mint);color:#07261c;border-radius:999px;padding:15px 28px;font-size:clamp(20px,3vw,28px);font-weight:700}
+#join h2,#board h2{font:400 clamp(48px,9vw,82px)/1 Creepster,Georgia,serif;color:var(--or);margin:0 0 10px}
+#join p,#board p{font-size:clamp(18px,2.8vw,24px);color:var(--muted);margin:8px auto 18px;max-width:650px}
+#initials{display:block;width:min(330px,80vw);margin:14px auto 18px;border:3px solid var(--ln);border-radius:18px;background:#0b0612;color:var(--tx);font:700 clamp(40px,8vw,70px)/1 Fredoka,sans-serif;text-align:center;text-transform:uppercase;letter-spacing:.22em;padding:16px 12px 16px 26px;user-select:text}
+#initials:focus{outline:4px solid var(--mint);border-color:var(--mint)}
+#initials[aria-invalid="true"]{border-color:#ff5f65;outline-color:#ff5f65}
+#joinhelp{color:#ff9b9f;font-size:15px;font-weight:700;margin:-9px 0 14px}
+#joinstart:disabled{opacity:.38;filter:grayscale(1)}
+.rules{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.rules span{background:#ffffff0c;border:1px solid #ffffff18;border-radius:999px;padding:8px 13px;font-size:14px;color:var(--tx)}
+.leaderlist{display:grid;gap:8px;max-width:600px;margin:16px auto 22px;text-align:left}
+.leaderrow{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:10px;background:#ffffff0b;border:1px solid #ffffff14;border-radius:14px;padding:11px 15px;font-size:clamp(17px,2.5vw,22px)}
+.leaderrow.current{border-color:var(--mint);background:#5fe1b619}
+.leaderrow .rank{color:var(--or2);font-weight:700}.leaderrow .initials{font-weight:700;letter-spacing:.12em}.leaderrow .points{color:var(--mint);font-weight:700}
+.emptyboard{color:var(--muted);padding:24px;text-align:center}
+.finalscore{font-size:clamp(22px,3.5vw,31px)!important;color:var(--tx)!important}.finalscore b{color:var(--mint)}
+@keyframes breathe{50%{transform:scale(1.015);box-shadow:0 0 100px #ff7a1a38,inset 0 0 40px #ffffff0d}}
+@media (max-width:700px){.controls{grid-column:2}.brand{font-size:13px}.iconbtn{padding:0 9px;font-size:12px}.tally{font-size:14px}.card{grid-template-columns:1fr;text-align:center;grid-template-rows:auto auto auto}.card b{grid-row:auto;font-size:34px}.card small{display:none}.hero .eyebrow{display:none}h1{font-size:38px}.sub{margin-top:2px}#bar{grid-template-columns:auto 1fr auto}.gamehud{padding-right:2px}#score{min-width:0}.leaderrow{grid-template-columns:42px 1fr auto}}
+@media (max-height:680px) and (orientation:landscape){#mast{min-height:42px}.iconbtn{height:40px}.hero{display:none}.card b{font-size:34px}.card .name{font-size:17px}.card small{display:none}#stage{gap:8px}.msg{font-size:19px}canvas{height:min(58vh,72vw)}}
+@media (prefers-reduced-motion:reduce){h1,#attract .panel{animation:none}}
+</style></head>
+<body><div id="app">
+<div id="hw">
+ <header id="mast"><div class="brand"><strong>Cyber &amp; IT Lab</strong> presents</div><div class="controls"><button class="iconbtn" id="leaders">Leaders</button><button class="iconbtn" id="sound" aria-pressed="true">Sound on</button><button class="iconbtn" id="full">Full screen</button></div><div class="tally" aria-live="polite"><span class="who" id="playerTag">---</span><span class="dot">·</span><b id="countdown">5:00</b><span class="dot">·</span><span>Treats</span><b id="treats">0/9</b><button class="endbtn" id="finish">End turn</button></div></header>
+ <div class="hero"><span class="eyebrow">Tonight only · tap to play</span><h1>Trades &amp; Treats</h1><p class="sub">Nine bite-size games. Pick your poison.</p></div>
+ <main id="home" aria-label="Choose a game"></main>
+</div>
+<div id="game" hidden><div id="bar"><button class="btn" id="back">◀ Games</button><div id="title"></div><div class="gamehud"><span id="gameclock">5:00</span><span id="score" aria-live="polite"></span></div></div><div id="stage"></div></div>
+</div>
+<div id="attract" role="button" tabindex="0" aria-label="Start the arcade"><div class="panel"><div class="eyebrow">Cyber &amp; IT Lab presents</div><h2>Trades &amp; Treats</h2><p>Step into the Haunted Arcade</p><span class="attracttop" id="attracttop">Be the first challenger!</span><span class="tap">Tap anywhere to start</span></div></div>
+<div id="join" hidden><div class="panel"><div class="eyebrow">Five-minute challenge</div><h2>Who dares to play?</h2><p>Enter up to three initials. Finish different games to collect as many treats as you can before time runs out.</p><div class="rules"><span>5:00 on the clock</span><span>1 treat per different game</span><span>Top 10 make the board</span></div><form id="joinform"><label for="initials" class="eyebrow">Your initials</label><input id="initials" name="initials" maxlength="3" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text" placeholder="ABC" aria-describedby="joinhelp"><div id="joinhelp" hidden>Please try different initials.</div><button class="btn" id="joinstart" type="submit" disabled>Start my 5 minutes</button></form></div></div>
+<div id="board" hidden><div class="panel"><div class="eyebrow">Five-minute challenge</div><h2 id="boardtitle">Leaderboard</h2><p class="finalscore" id="finalscore" hidden></p><div class="leaderlist" id="leaderlist"></div><div class="ov-actions"><button class="btn" id="boardclose" style="background:var(--pu);color:#fff">Back to games</button><button class="btn" id="nextplayer" hidden>Next player</button></div></div></div>
+<script>
+const $=(q,r=document)=>r.querySelector(q),R=n=>Math.random()*n|0,sh=a=>a.sort(()=>Math.random()-.5);
+const SESSION_MS=5*60*1000,BOARD_KEY='tradesTreatsLeaderboardV2';
+const BLOCKED_INITIALS=new Set(['ASS','CUM','ANL','FU','FAG','FCK','FUC','FUK','FUQ','SEX','XXX','TIT','DIK','DIC','COK','CNT','PIS','SHT','WTF','KKK','NIG','NGR','KYS']);
+let tm=[],cur=-1,AC,soundOn=true,treats=0,roundEnded=false,player='',sessionEnd=0,sessionTick=0,sessionActive=false,sessionSaved=false,boardAuto=0,currentResultId='';
+let completed=new Set();
+const later=(f,m)=>{const t=setTimeout(f,m);tm.push(t);return t},every=(f,m)=>{const t=setInterval(f,m);tm.push(t);return t};
+const stop=()=>{tm.forEach(t=>{clearTimeout(t);clearInterval(t)});tm=[]};
+function beep(f,d=.15){if(!soundOn)return;try{AC=AC||new(window.AudioContext||webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;o.type='triangle';g.gain.value=.085;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+const S=$('#stage'),SC=$('#score');
+const updateTreats=()=>{$('#treats').textContent=`${treats}/9`;$('#playerTag').textContent=player||'---'};
+function updateCards(){document.querySelectorAll('.card').forEach((c,i)=>{const done=completed.has(i);c.classList.toggle('done',done);c.disabled=done})}
+function end(m){if(roundEnded||!sessionActive)return;roundEnded=true;stop();const fresh=!completed.has(cur);if(fresh){completed.add(cur);treats++;updateTreats();updateCards()}const allDone=completed.size===9;const o=document.createElement('div');o.className='ov';o.innerHTML=`<b>${m[0]}</b><div>${m[1]}</div><div class="reward">${fresh?`+1 treat · ${treats} of 9 collected`:'Treat already collected for this game'}</div><div class="ov-actions"><button class="btn" id="hm">${allDone?'See final score':'Choose next game'}</button></div>`;S.append(o);$('#hm',o).onclick=()=>allDone?finishSession('All nine games complete!'):home();beep(fresh?880:240,.35)}
+
+/* Built-in vector icons: the kiosk has no emoji font, so every emoji is swapped for an SVG */
+const I={
+pumpkin:`<ellipse cx="32" cy="38" rx="25" ry="20" fill="#ff7a1a" stroke="#b34700" stroke-width="3"/><rect x="29" y="8" width="7" height="11" rx="2" fill="#5a8f29"/><path d="M16 30l10-2-3 9zM48 30l-10-2 3 9z" fill="#2a0f00"/><path d="M18 45q14 10 28 0l-5-4-4 3-5-4-5 4-4-3z" fill="#2a0f00"/>`,
+ghost:`<path d="M10 58V28a22 22 0 0 1 44 0v30l-7-6-7 6-8-6-8 6-7-6z" fill="#f4f0ff"/><circle cx="23" cy="28" r="4.5" fill="#222"/><circle cx="41" cy="28" r="4.5" fill="#222"/><ellipse cx="32" cy="41" rx="4" ry="5.5" fill="#222"/>`,
+candy:`<path d="M18 32L3 20v24zM46 32l15-12v24z" fill="#ff9bd0"/><circle cx="32" cy="32" r="15" fill="#ff4fa3"/><path d="M25 22q7 10 0 20" stroke="#fff" stroke-width="3" fill="none"/>`,
+pop:`<rect x="30" y="36" width="4" height="24" fill="#eee"/><circle cx="32" cy="24" r="18" fill="#44c8f5"/><path d="M32 24m-9 0a9 9 0 1 1 9 9" stroke="#fff" stroke-width="4" fill="none"/>`,
+vamp:`<circle cx="32" cy="36" r="22" fill="#e8dfff"/><path d="M9 32Q10 6 32 8Q54 6 55 32Q44 18 32 21Q20 18 9 32z" fill="#222"/><circle cx="24" cy="36" r="3" fill="#c00"/><circle cx="40" cy="36" r="3" fill="#c00"/><path d="M22 46q10 6 20 0" stroke="#222" stroke-width="2" fill="none"/><path d="M25 47l3 9 3-8zM39 47l-3 9-3-8z" fill="#fff" stroke="#222"/>`,
+bat:`<path d="M32 26Q22 10 2 14Q10 22 8 34Q16 28 22 40Q28 32 32 40Q36 32 42 40Q48 28 56 34Q54 22 62 14Q42 10 32 26z" fill="#8a5ad8"/><path d="M26 22l2-9 4 6 4-6 2 9z" fill="#8a5ad8"/><circle cx="28" cy="27" r="2" fill="#fff"/><circle cx="36" cy="27" r="2" fill="#fff"/>`,
+spider:`<path d="M32 34L8 14M32 34L3 30M32 34L6 48M32 34L14 60M32 34L56 14M32 34L61 30M32 34L58 48M32 34L50 60" stroke="#c9b6ff" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="32" cy="39" r="13" fill="#3b2a4d" stroke="#c9b6ff" stroke-width="2"/><circle cx="32" cy="23" r="8" fill="#3b2a4d" stroke="#c9b6ff" stroke-width="2"/><circle cx="29" cy="22" r="2" fill="#ff3b3b"/><circle cx="35" cy="22" r="2" fill="#ff3b3b"/>`,
+skull:`<path d="M32 5C16 5 9 17 11 30c1 6 6 8 9 10v11h24V40c3-2 8-4 9-10C55 17 48 5 32 5z" fill="#f2efe6"/><circle cx="22" cy="30" r="6" fill="#222"/><circle cx="42" cy="30" r="6" fill="#222"/><path d="M32 36l-3 7h6z" fill="#222"/><path d="M26 44v7M32 44v7M38 44v7" stroke="#222" stroke-width="2"/>`,
+witch:`<path d="M32 3L17 42h30z" fill="#3a2266" stroke="#9b5cff" stroke-width="2"/><ellipse cx="32" cy="46" rx="27" ry="8" fill="#3a2266" stroke="#9b5cff" stroke-width="2"/><rect x="21" y="34" width="22" height="6" fill="#ff7a1a"/>`,
+basket:`<path d="M14 26a18 16 0 0 1 36 0" fill="none" stroke="#6b3d10" stroke-width="5"/><path d="M5 26h54l-8 31H13z" fill="#c8843a" stroke="#6b3d10" stroke-width="3"/><path d="M22 30l3 23M32 30v23M42 30l-3 23" stroke="#6b3d10" stroke-width="2"/>`,
+hammer:`<rect x="28" y="22" width="9" height="38" rx="3" fill="#c8843a"/><rect x="8" y="6" width="48" height="22" rx="6" fill="#a9afc6" stroke="#555" stroke-width="2"/>`,
+boom:`<path d="M32 2l8 16 17-8-6 17 13 6-15 7 9 15-18-5-4 16-6-16-17 7 7-17L2 31l16-5-5-17 15 8z" fill="#ffd23a" stroke="#ff7a1a" stroke-width="2"/>`,
+heart:`<path d="M32 57S5 40 5 22a14 14 0 0 1 27-5 14 14 0 0 1 27 5C59 40 32 57 32 57z" fill="#ff3b5c"/>`,
+star:`<path d="M32 3l9 19 20 3-15 14 4 21-18-10-18 10 4-21L3 25l20-3z" fill="#ffd23a"/>`,
+clock:`<circle cx="32" cy="33" r="25" fill="none" stroke="currentColor" stroke-width="6"/><path d="M32 17v17l11 6" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/>`,
+up:`<path d="M32 10L58 54H6z" fill="currentColor"/>`,down:`<path d="M32 54L58 10H6z" fill="currentColor"/>`,left:`<path d="M10 32L54 6v52z" fill="currentColor"/>`,right:`<path d="M54 32L10 6v52z" fill="currentColor"/>`};
+const EM={'🎃':'pumpkin','👻':'ghost','🍬':'candy','🍭':'pop','🧛':'vamp','🦇':'bat','🕷':'spider','💀':'skull','🧙':'witch','🧺':'basket','🔨':'hammer','💥':'boom','❤':'heart','⭐':'star','⏱':'clock','◀':'left','▶':'right','▲':'up','▼':'down'};
+const ic=n=>`<svg class="i" viewBox="0 0 64 64">${I[n]}</svg>`,RX=new RegExp(Object.keys(EM).join('|'),'g'),IM={};
+Object.keys(I).forEach(n=>{IM[n]=new Image();IM[n].src='data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" color="#fff1dc">${I[n]}</svg>`)});
+const dr=(x,e,cx,cy,z)=>{const m=IM[EM[e.replace(/\uFE0F/g,'')]];if(m&&m.complete)x.drawImage(m,cx-z/2,cy-z/2,z,z)};
+function fix(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),L=[];while(w.nextNode())L.push(w.currentNode);
+ L.forEach(t=>{const v=t.nodeValue.replace(/\uFE0F/g,'');RX.lastIndex=0;if(!RX.test(v))return;RX.lastIndex=0;const sp=document.createElement('span');sp.innerHTML=v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(RX,m=>ic(EM[m]));t.replaceWith(sp)})}
+new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType==1)fix(n);else if(n.nodeType==3&&n.parentNode)fix(n.parentNode)}))).observe(document.body,{childList:true,subtree:true});
+fix(document.body);
+
+/* 1. Ghost Tic-Tac-Toe */
+function ttt(s){
+ let b=Array(9).fill(''),done=0,busy=0;const L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+ s.innerHTML='<div class="msg">Get three in a row. You are 🎃!</div><div class="g g3"></div>';
+ const g=$('.g',s),w=p=>L.some(l=>l.every(i=>b[i]==p)),draw=()=>g.innerHTML=b.map((v,i)=>`<button data-i="${i}">${v}</button>`).join('');
+ const need=p=>{for(const l of L){const e=l.filter(i=>!b[i]);if(e.length==1&&l.filter(i=>b[i]==p).length==2)return e[0]}return -1};
+ const chk=()=>{if(w('🎃'))end(['You win!','The ghost ran away 👻']);else if(w('👻'))end(['Boo!','The ghost got you. Try again!']);else if(b.every(x=>x))end(['A draw!','A spooky stalemate.']);else return 0;done=1;return 1};
+ draw();
+ g.onpointerdown=e=>{const i=+e.target.dataset.i;if(done||busy||isNaN(i)||b[i])return;b[i]='🎃';beep(520,.1);draw();if(chk())return;busy=1;
+  later(()=>{let k=Math.random()<.2?-1:need('👻');if(k<0)k=need('🎃');if(k<0&&!b[4])k=4;if(k<0||Math.random()<.12){const f=b.map((v,j)=>v?-1:j).filter(j=>j>=0);k=f[R(f.length)]}b[k]='👻';beep(220,.15);busy=0;draw();chk()},500)};
+}
+
+/* 2. Candy Maze */
+function maze(s){
+ const W=9,H=12,Z=60,c=Array(W*H).fill(15),seen=new Set([0]),st=[0],D=[[0,-1,1,4],[1,0,2,8],[0,1,4,1],[-1,0,8,2]];
+ while(st.length){const i=st[st.length-1],x=i%W,y=i/W|0,n=D.filter(d=>{const a=x+d[0],b=y+d[1];return a>=0&&b>=0&&a<W&&b<H&&!seen.has(b*W+a)});if(!n.length){st.pop();continue}const d=n[R(n.length)],j=i+d[1]*W+d[0];c[i]&=~d[2];c[j]&=~d[3];seen.add(j);st.push(j)}
+ let p=0,mv=0,won=0;
+ s.innerHTML='<canvas width="540" height="720"></canvas><div class="pad"><i></i><button data-d="0">▲</button><i></i><button data-d="3">◀</button><button data-d="2">▼</button><button data-d="1">▶</button></div>';
+ const x=$('canvas',s).getContext('2d');
+ const draw=()=>{x.clearRect(0,0,540,720);x.strokeStyle='#ff7a1a';x.lineWidth=5;x.lineCap='round';x.beginPath();
+  c.forEach((v,i)=>{const X=i%W*Z,Y=(i/W|0)*Z;if(v&1){x.moveTo(X,Y);x.lineTo(X+Z,Y)}if(v&2){x.moveTo(X+Z,Y);x.lineTo(X+Z,Y+Z)}if(v&4){x.moveTo(X,Y+Z);x.lineTo(X+Z,Y+Z)}if(v&8){x.moveTo(X,Y);x.lineTo(X,Y+Z)}});x.stroke();
+  dr(x,'🍬',(W-1)*Z+30,(H-1)*Z+30,46);dr(x,'🎃',p%W*Z+30,(p/W|0)*Z+30,46)};
+ const go=d=>{if(won||c[p]&(1<<d))return;p+=D[d][1]*W+D[d][0];mv++;SC.textContent=mv+' steps';beep(300+mv%8*25,.05);draw();if(p==W*H-1){won=1;end(['You escaped!',`Found the candy in ${mv} steps 🍬`])}};
+ $('.pad',s).onpointerdown=e=>{const d=e.target.dataset.d;if(d==null)return;go(+d);const t=setInterval(()=>go(+d),170);tm.push(t);const u=()=>clearInterval(t);addEventListener('pointerup',u,{once:true});addEventListener('pointercancel',u,{once:true})};
+ draw();
+}
+
+/* 3. Monster Match */
+function mem(s){
+ const E=['🎃','👻','🦇','🕷️','🧛','💀','🧙','🍬'],cs=sh([...E,...E]);let op=[],ok=0,mv=0,lock=0;
+ s.innerHTML='<div class="msg">Find all the matching pairs</div><div class="g g4">'+cs.map((e,i)=>`<button data-i="${i}">?</button>`).join('')+'</div>';
+ const g=$('.g',s),B=g.children;
+ g.onpointerdown=e=>{const i=+e.target.dataset.i;if(lock||isNaN(i)||op.includes(i)||B[i].disabled)return;B[i].textContent=cs[i];B[i].classList.add('on');op.push(i);beep(400,.08);
+  if(op.length==2){mv++;SC.textContent=mv+' tries';const[a,b]=op;
+   if(cs[a]==cs[b]){B[a].disabled=B[b].disabled=true;op=[];beep(700,.2);if(++ok==8)later(()=>end(['You found them all!',`In ${mv} tries 🧛`]),500)}
+   else{lock=1;later(()=>{[a,b].forEach(k=>{B[k].textContent='?';B[k].classList.remove('on')});op=[];lock=0},800)}}};
+}
+
+/* 4. Whack-a-Ghost */
+function whack(s){
+ let sc=0,t=30;
+ s.innerHTML='<div class="msg">Tap the ghosts 👻. Don’t touch the skulls 💀</div><div class="g g3">'+'<button></button>'.repeat(9)+'</div>';
+ const g=$('.g',s),B=[...g.children],up=()=>SC.textContent=`⏱ ${t}  ⭐ ${sc}`;up();
+ g.onpointerdown=e=>{const b=e.target,k=b.dataset.k;if(!k)return;sc=Math.max(0,sc+(k=='g'?1:-2));beep(k=='g'?700:150,.1);b.textContent='💥';delete b.dataset.k;up();later(()=>{if(!b.dataset.k)b.textContent=''},250)};
+ every(()=>{t--;up();if(t<=0)end(['Time’s up!',`You scored ${sc} points`])},1000);
+ every(()=>{const b=B[R(9)];if(b.dataset.k||b.textContent)return;const k=Math.random()<.75?'g':'s';b.dataset.k=k;b.textContent=k=='g'?'👻':'💀';later(()=>{if(b.dataset.k==k){delete b.dataset.k;b.textContent=''}},1000)},560);
+}
+
+/* 5. Treat Catcher */
+function catchG(s){
+ s.innerHTML='<div class="msg">Drag to move the basket. Dodge the spiders!</div><canvas width="540" height="720"></canvas>';
+ const cv=$('canvas',s),x=cv.getContext('2d');let bx=270,L=3,sc=0,it=[],f=0;
+ const mvTo=e=>{const r=cv.getBoundingClientRect();bx=Math.max(40,Math.min(500,(e.clientX-r.left)/r.width*540))};
+ cv.onpointerdown=e=>{cv.setPointerCapture(e.pointerId);mvTo(e)};cv.onpointermove=mvTo;
+ const up=()=>SC.textContent='❤️'.repeat(Math.max(L,0))+'  ⭐ '+sc;up();
+ every(()=>{f++;if(f%Math.max(16,42-sc)==0)it.push({x:30+R(480),y:-30,v:4+Math.random()*3+sc/14,e:Math.random()<.3?'🕷️':['🍬','🍭','🎃'][R(3)]});
+  x.clearRect(0,0,540,720);
+  it=it.filter(o=>{o.y+=o.v;if(o.y>650&&o.y<705&&Math.abs(o.x-bx)<58){if(o.e=='🕷️'){L--;beep(120,.3)}else{sc++;beep(800,.06)}up();return false}dr(x,o.e,o.x,o.y,52);return o.y<740});
+  dr(x,'🧺',bx,680,84);
+  if(L<=0)end(['Game over!',`You caught ${sc} treats 🍬`])},25);
+}
+
+/* 6. Spooky Simon */
+function simon(s){
+ const C=['🎃','👻','🦇','🕷️'],F=[262,330,392,523],K=['#ff7a1a','#9b5cff','#2fbf4a','#e03a3a'];
+ s.innerHTML='<div class="msg"></div><div class="g g2">'+C.map((c,i)=>`<button data-i="${i}" style="background:${K[i]}55;border-color:${K[i]}">${c}</button>`).join('')+'</div>';
+ const g=$('.g',s),B=[...g.children],m=$('.msg',s);let seq=[],pos=0,turn=0;
+ const flash=i=>{B[i].classList.add('fl');beep(F[i],.3);later(()=>B[i].classList.remove('fl'),320)};
+ const round=()=>{turn=0;pos=0;seq.push(R(4));SC.textContent='Round '+seq.length;m.textContent='Watch closely…';seq.forEach((v,k)=>later(()=>flash(v),700+k*600));later(()=>{turn=1;m.textContent='Your turn!'},700+seq.length*600)};
+ g.onpointerdown=e=>{const i=+e.target.dataset.i;if(!turn||isNaN(i))return;flash(i);if(i!=seq[pos]){turn=0;end(['Oops!',`You reached round ${seq.length} 🦇`]);return}if(++pos==seq.length){turn=0;later(round,800)}};
+ round();
+}
+
+/* 7. Word Witch (Halloween + cybersecurity words) */
+function word(s){
+ const W=[['PUMPKIN','Carved at Halloween'],['SKELETON','Rattling bones'],['VAMPIRE','Has fangs and a cape'],['FIREWALL','Blocks bad network traffic'],['PASSWORD','Keep it long and secret'],['MALWARE','Software that does harm'],['PHISHING','Fake emails that fish for info'],['WITCH','Rides a broomstick'],['ZOMBIE','Walks the night, wants brains'],['ENCRYPT','Scramble data so spies can’t read it']];
+ const Q=sh([...W]).slice(0,5);let r=0,sc=0,w,tl,an;
+ s.innerHTML='<div class="msg" id="h"></div><div class="row" id="a"></div><div class="row" id="l"></div><button class="btn" id="sk">Skip word</button>';
+ const show=()=>{$('#a',s).innerHTML=w.split('').map((_,i)=>`<button class="sl" data-a="${i}">${an[i]!=null?tl[an[i]]:''}</button>`).join('');$('#l',s).innerHTML=tl.map((c,i)=>`<button data-t="${i}" ${an.includes(i)?'disabled':''}>${c}</button>`).join('')};
+ const next=()=>{if(r>=5)return end(['Spell-tacular!',`You unscrambled ${sc} of 5`]);w=Q[r][0];$('#h',s).textContent=`Word ${r+1} of 5. Hint: ${Q[r][1]}`;do tl=sh(w.split(''));while(tl.join('')==w);an=[];SC.textContent='⭐ '+sc;show()};
+ let skipAt=0;const doSkip=e=>{e.stopPropagation();const now=performance.now();if(now-skipAt<300)return;skipAt=now;r++;next()};
+ $('#sk',s).onpointerdown=doSkip;$('#sk',s).onclick=doSkip;
+ s.onpointerdown=e=>{const b=e.target,d=b.dataset;if(b.id=='sk')return;
+  if(d.t!=null&&an.length<w.length){an.push(+d.t);beep(500,.05)}else if(d.a!=null&&an[+d.a]!=null){an.splice(+d.a,1)}else return;show();
+  if(an.length==w.length){if(an.map(i=>tl[i]).join('')==w){sc++;r++;beep(880,.3);$('#h',s).textContent='Correct!';later(next,800)}else $('#h',s).textContent='Not quite. Tap a letter slot to remove it.'}};
+ next();
+}
+
+/* 8. Slide Puzzle */
+function slide(s){
+ const E=['🎃','👻','🦇','🕷️','🧛','💀','🧙','🍬',''];let a=[...E.keys()],e=8,mv=0;
+ const adj=i=>[i-3,i+3,i%3?i-1:-1,i%3<2?i+1:-1].filter(j=>j>=0&&j<9);
+ for(let k=0;k<120;k++){const n=adj(e),j=n[R(n.length)];[a[e],a[j]]=[a[j],a[e]];e=j}
+ s.innerHTML='<div class="msg">Slide the tiles into this order:<br>🎃 👻 🦇 / 🕷️ 🧛 💀 / 🧙 🍬</div><div class="g g3"></div>';
+ const g=$('.g',s),draw=()=>g.innerHTML=a.map((v,i)=>`<button data-i="${i}" ${v==8?'style="visibility:hidden"':''}>${E[v]}</button>`).join('');draw();
+ g.onpointerdown=ev=>{const i=+ev.target.dataset.i;if(isNaN(i)||!adj(e).includes(i))return;[a[e],a[i]]=[a[i],a[e]];e=i;mv++;SC.textContent=mv+' moves';beep(350,.06);draw();if(a.every((v,k)=>v==k))end(['Solved!',`Done in ${mv} moves 💀`])};
+}
+
+/* 9. Pumpkin Lights Out */
+function lights(s){
+ let a=Array(25).fill(0),mv=0;
+ const tog=i=>{const x=i%5,y=i/5|0;[[0,0],[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{const X=x+dx,Y=y+dy;if(X>=0&&Y>=0&&X<5&&Y<5)a[Y*5+X]^=1})};
+ for(let k=0;k<9;k++)tog(R(25));if(!a.some(v=>v))tog(12);
+ s.innerHTML='<div class="msg">Turn off every jack-o’-lantern.<br>Each tap flips its neighbors too!</div><div class="g g5"></div>';
+ const g=$('.g',s),draw=()=>g.innerHTML=a.map((v,i)=>`<button class="${v?'lt':''}" data-i="${i}">${v?'🎃':''}</button>`).join('');draw();
+ g.onpointerdown=e=>{const i=+e.target.dataset.i;if(isNaN(i))return;tog(i);mv++;SC.textContent=mv+' taps';beep(300+a.filter(v=>v).length*30,.08);draw();if(!a.some(v=>v))end(['Lights out!',`Cleared in ${mv} taps 🎃`])};
+}
+
+const G=[
+ ['Ghost Tic-Tac-Toe','👻',ttt,'Strategy · 1 min'],
+ ['Candy Maze','🍬',maze,'Puzzle · 2 min'],
+ ['Monster Match','🧛',mem,'Memory · 2 min'],
+ ['Whack-a-Ghost','🔨',whack,'Quick play · 30 sec'],
+ ['Treat Catcher','🧺',catchG,'Action · 1 min'],
+ ['Spooky Simon','🦇',simon,'Memory · 2 min'],
+ ['Word Witch','🧙',word,'Cyber words · 3 min'],
+ ['Slide Puzzle','💀',slide,'Puzzle · 3 min'],
+ ['Lights Out','🎃',lights,'Strategy · 2 min']
+];
+$('#home').innerHTML=G.map((g,i)=>`<button class="card" data-i="${i}" aria-label="Play ${g[0]}, ${g[3]}"><b>${g[1]}</b><span class="name">${g[0]}</span><small>${g[3]}</small></button>`).join('');
+$('#home').onclick=e=>{const c=e.target.closest('.card');if(c)play(+c.dataset.i)};
+function play(i){if(!sessionActive||completed.has(i))return;stop();roundEnded=false;cur=i;S.onpointerdown=null;S.innerHTML='';SC.textContent='';$('#title').textContent=G[i][0];$('#hw').hidden=true;$('#game').hidden=false;G[i][2](S)}
+function home(){stop();cur=-1;S.onpointerdown=null;S.innerHTML='';$('#game').hidden=true;$('#hw').hidden=false;updateCards()}
+$('#back').onclick=home;
+$('#sound').onclick=()=>{soundOn=!soundOn;$('#sound').textContent=soundOn?'Sound on':'Sound off';$('#sound').setAttribute('aria-pressed',soundOn);if(soundOn)beep(660,.08)};
+if(!document.documentElement.requestFullscreen)$('#full').hidden=true;
+$('#full').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch(e){}};
+document.addEventListener('fullscreenchange',()=>{$('#full').textContent=document.fullscreenElement?'Exit full screen':'Full screen'});
+const attract=$('#attract'),join=$('#join'),board=$('#board'),initials=$('#initials');
+const clockText=ms=>{const total=Math.ceil(ms/1000),m=Math.floor(total/60),s=total%60;return `${m}:${String(s).padStart(2,'0')}`};
+function tickSession(){if(!sessionActive)return;const left=Math.max(0,sessionEnd-Date.now()),text=clockText(left);$('#countdown').textContent=text;$('#gameclock').textContent=text;$('#countdown').classList.toggle('urgent',left<=60000);$('#gameclock').classList.toggle('urgent',left<=60000);if(left<=0)finishSession('Time’s up!')}
+function beginSession(name){player=name;treats=0;completed=new Set();sessionSaved=false;currentResultId='';sessionActive=true;sessionEnd=Date.now()+SESSION_MS;clearInterval(sessionTick);sessionTick=setInterval(tickSession,250);updateTreats();tickSession();join.hidden=true;board.hidden=true;home();beep(523,.08)}
+const blockedInitials=value=>BLOCKED_INITIALS.has(value);
+function getBoard(){try{const data=JSON.parse(localStorage.getItem(BOARD_KEY)||'[]');return Array.isArray(data)?data.filter(r=>r&&/^[A-Z]{1,3}$/.test(r.initials)&&!blockedInitials(r.initials)):[]}catch(e){return[]}}
+function refreshAttractTop(){const top=getBoard()[0];$('#attracttop').innerHTML=top?`Current leader <b>${top.initials}</b> · ${top.treats} ${top.treats===1?'treat':'treats'}`:'Be the first challenger!'}
+function saveResult(){if(sessionSaved||!player)return;sessionSaved=true;currentResultId=`${Date.now()}-${Math.random().toString(36).slice(2,7)}`;const data=getBoard();data.push({id:currentResultId,initials:player,treats,ts:Date.now()});data.sort((a,b)=>b.treats-a.treats||a.ts-b.ts);try{localStorage.setItem(BOARD_KEY,JSON.stringify(data.slice(0,10)))}catch(e){}}
+function renderBoard(final=false,title='Leaderboard'){const data=getBoard();$('#boardtitle').textContent=title;const fs=$('#finalscore');fs.hidden=!final;if(final)fs.innerHTML=`<b>${player}</b> banked <b>${treats}</b> ${treats===1?'treat':'treats'} this turn.`;$('#leaderlist').innerHTML=data.length?data.map((r,i)=>`<div class="leaderrow ${r.id===currentResultId?'current':''}"><span class="rank">#${i+1}</span><span class="initials">${r.initials}</span><span class="points">${r.treats} ${r.treats===1?'treat':'treats'}</span></div>`).join(''):'<div class="emptyboard">No challengers yet. Be the first!</div>';$('#boardclose').hidden=final;$('#nextplayer').hidden=!final;board.hidden=false;clearTimeout(boardAuto);if(final)boardAuto=setTimeout(showAttract,45000)}
+function finishSession(title='Time’s up!'){if(!sessionActive)return;sessionActive=false;clearInterval(sessionTick);stop();saveResult();$('#game').hidden=true;$('#hw').hidden=false;renderBoard(true,title);beep(220,.45)}
+function showAttract(){clearTimeout(boardAuto);clearInterval(sessionTick);stop();sessionActive=false;player='';treats=0;completed=new Set();currentResultId='';updateTreats();updateCards();refreshAttractTop();$('#countdown').textContent='5:00';$('#gameclock').textContent='5:00';join.hidden=true;board.hidden=true;attract.hidden=false;home()}
+function setInitialsState(){const name=initials.value,isBlocked=blockedInitials(name);$('#joinstart').disabled=!name||isBlocked;$('#joinhelp').hidden=!isBlocked;initials.setAttribute('aria-invalid',String(isBlocked));return name&&!isBlocked}
+function startArcade(){if(!attract.hidden){attract.hidden=true;join.hidden=false;initials.value='';$('#joinhelp').hidden=true;initials.setAttribute('aria-invalid','false');$('#joinstart').disabled=true;requestAnimationFrame(()=>initials.focus())}}
+initials.oninput=()=>{initials.value=initials.value.toUpperCase().replace(/[^A-Z]/g,'').slice(0,3);setInitialsState()};
+$('#joinform').onsubmit=e=>{e.preventDefault();if(setInitialsState())beginSession(initials.value)};
+$('#leaders').onclick=()=>renderBoard(false);
+$('#boardclose').onclick=()=>{board.hidden=true};
+$('#nextplayer').onclick=showAttract;
+$('#finish').onclick=()=>finishSession('Turn complete');
+attract.onpointerdown=startArcade;
+attract.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();startArcade()}};
+refreshAttractTop();
+addEventListener('contextmenu',e=>e.preventDefault());
+['gesturestart','dblclick'].forEach(n=>addEventListener(n,e=>e.preventDefault()));
+</script></body></html>
