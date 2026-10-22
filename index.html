@@ -87,6 +87,11 @@ canvas{aspect-ratio:3/4;height:min(53vh,115vw);background:#0d0616;border:3px sol
 #initials{display:block;width:min(330px,80vw);margin:14px auto 18px;border:3px solid var(--ln);border-radius:18px;background:#0b0612;color:var(--tx);font:700 clamp(40px,8vw,70px)/1 Fredoka,sans-serif;text-align:center;text-transform:uppercase;letter-spacing:.22em;padding:16px 12px 16px 26px;user-select:text}
 #initials:focus{outline:4px solid var(--mint);border-color:var(--mint)}
 #initials[aria-invalid="true"]{border-color:#ff5f65;outline-color:#ff5f65}
+#initialkbd{display:grid;gap:10px;width:min(920px,88vw);margin:2px auto 20px}
+.keyrow{display:flex;justify-content:center;gap:10px}
+.key{flex:1 1 0;max-width:82px;min-width:0;min-height:64px;border:2px solid #ffffff2b;border-radius:14px;background:linear-gradient(180deg,#3b2259,#241438);color:var(--tx);box-shadow:inset 0 2px #ffffff19,0 6px 12px #0004;font:700 clamp(22px,3vw,34px) Fredoka,sans-serif;touch-action:manipulation}
+.key:active{transform:translateY(3px);background:var(--ln);border-color:var(--mint)}
+.key.wide{flex:1.7 1 0;max-width:148px;color:var(--or2);font-size:clamp(16px,2vw,24px)}
 #joinhelp{color:#ff9b9f;font-size:15px;font-weight:700;margin:-9px 0 14px}
 #joinstart:disabled{opacity:.38;filter:grayscale(1)}
 .rules{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
@@ -99,6 +104,57 @@ canvas{aspect-ratio:3/4;height:min(53vh,115vw);background:#0d0616;border:3px sol
 .finalscore{font-size:clamp(22px,3.5vw,31px)!important;color:var(--tx)!important}.finalscore b{color:var(--mint)}
 @keyframes breathe{50%{transform:scale(1.015);box-shadow:0 0 100px #ff7a1a38,inset 0 0 40px #ffffff0d}}
 @media (max-width:700px){.controls{grid-column:2}.brand{font-size:13px}.iconbtn{padding:0 9px;font-size:12px}.tally{font-size:14px}.card{grid-template-columns:1fr;text-align:center;grid-template-rows:auto auto auto}.card b{grid-row:auto;font-size:34px}.card small{display:none}.hero .eyebrow{display:none}h1{font-size:38px}.sub{margin-top:2px}#bar{grid-template-columns:auto 1fr auto}.gamehud{padding-right:2px}#score{min-width:0}.leaderrow{grid-template-columns:42px 1fr auto}}
+@media (orientation:portrait) and (min-width:800px){
+ body{font-size:clamp(24px,1.8vw,38px)}
+ #app{padding:clamp(24px,2.2vw,50px)}
+ #hw,#game{gap:clamp(18px,1.4vh,42px)}
+ #mast{min-height:clamp(170px,7.5vh,300px);gap:18px 28px}
+ .brand{font-size:clamp(24px,1.7vw,38px)}
+ .controls{gap:clamp(12px,1vw,24px)}
+ .iconbtn{height:clamp(70px,4.2vh,112px);min-width:clamp(120px,8vw,210px);border-width:3px;border-radius:24px;font-size:clamp(22px,1.5vw,34px);padding:0 24px}
+ .tally{gap:clamp(15px,1.3vw,28px);border-width:3px;padding:clamp(13px,1vh,26px) clamp(22px,2vw,46px);font-size:clamp(24px,1.8vw,40px)}
+ .endbtn{height:clamp(54px,3.4vh,88px);font-size:clamp(20px,1.35vw,30px);padding:0 26px}
+ .hero{padding:clamp(15px,1.1vh,42px) 0}
+ .eyebrow{font-size:clamp(21px,1.45vw,32px)}
+ h1{font-size:clamp(92px,8.2vw,178px)}
+ .sub{font-size:clamp(28px,2vw,44px);margin-top:14px}
+ #home{gap:clamp(18px,1.3vw,34px)}
+ .card{grid-template-columns:1fr;grid-template-rows:auto auto auto;text-align:center;border-width:3px;border-radius:clamp(26px,2vw,46px);padding:clamp(20px,1.8vw,42px)}
+ .card b{grid-row:auto;font-size:clamp(78px,7vw,150px)}
+ .card .name{font-size:clamp(29px,2.1vw,48px);align-self:center}
+ .card small{font-size:clamp(20px,1.35vw,30px);align-self:center;margin-top:12px}
+ .card.done:after{right:18px;bottom:18px;padding:9px 15px;font-size:clamp(15px,1vw,22px)}
+ #bar{border-radius:30px;padding:clamp(16px,1.2vw,28px);gap:24px}
+ #title{font-size:clamp(48px,4vw,86px)}
+ #gameclock,#score{font-size:clamp(26px,1.9vw,42px)}
+ .btn{min-height:clamp(78px,5vh,126px);border-radius:24px;font-size:clamp(28px,2vw,46px);padding:18px 32px}
+ #stage{gap:clamp(20px,1.4vh,40px);border-radius:34px}
+ .msg{font-size:clamp(32px,2.5vw,54px)}
+ .g{gap:clamp(16px,1.2vw,28px)}
+ #stage button{border-width:4px;border-radius:24px;font-size:clamp(50px,6vw,110px)}
+ #stage .btn{font-size:clamp(30px,2.2vw,48px);padding:18px 34px}
+ .pad{grid-template-columns:repeat(3,clamp(116px,8vw,180px));gap:16px}
+ #stage .pad button{height:clamp(94px,6vh,152px);font-size:clamp(42px,3vw,66px)}
+ #attract,#join,#board{padding:clamp(42px,3vw,82px)}
+ #attract .panel,#join .panel,#board .panel{width:min(1600px,94vw);border-width:5px;border-radius:54px;padding:clamp(54px,4vw,100px)}
+ #attract h2{font-size:clamp(116px,11vw,236px)}
+ #attract p{font-size:clamp(38px,2.8vw,62px);margin:34px 0}
+ .attracttop{font-size:clamp(25px,1.7vw,38px);padding:16px 28px;margin-bottom:30px}
+ #attract .tap{font-size:clamp(34px,2.4vw,52px);padding:24px 46px}
+ #join .panel{display:flex;flex-direction:column;justify-content:center;max-height:96vh;overflow:hidden}
+ #join h2,#board h2{font-size:clamp(84px,7vw,152px);margin-bottom:18px}
+ #join p,#board p{max-width:1250px;font-size:clamp(27px,1.85vw,42px);margin:12px auto 26px}
+ .rules{gap:16px;margin-bottom:26px}
+ .rules span{font-size:clamp(20px,1.35vw,30px);padding:13px 22px}
+ #initials{width:min(650px,76vw);border-width:5px;border-radius:28px;font-size:clamp(76px,6vw,128px);padding:22px 18px 22px 34px;margin:20px auto 24px}
+ #initialkbd{width:100%;max-width:1280px;gap:clamp(12px,1vh,22px);margin-bottom:clamp(26px,2vh,50px)}
+ .keyrow{gap:clamp(10px,.8vw,20px)}
+ .key{max-width:124px;min-height:clamp(82px,5vh,132px);border-width:3px;border-radius:22px;font-size:clamp(32px,2.2vw,48px)}
+ .key.wide{max-width:210px;font-size:clamp(23px,1.5vw,34px)}
+ #joinhelp{font-size:clamp(22px,1.4vw,32px);margin:-10px 0 22px}
+ .leaderlist{gap:14px;max-width:1100px;margin:26px auto 34px}
+ .leaderrow{grid-template-columns:90px 1fr auto;gap:20px;border-radius:22px;padding:18px 26px;font-size:clamp(27px,1.9vw,42px)}
+}
 @media (max-height:680px) and (orientation:landscape){#mast{min-height:42px}.iconbtn{height:40px}.hero{display:none}.card b{font-size:34px}.card .name{font-size:17px}.card small{display:none}#stage{gap:8px}.msg{font-size:19px}canvas{height:min(58vh,72vw)}}
 @media (prefers-reduced-motion:reduce){h1,#attract .panel{animation:none}}
 </style></head>
@@ -111,7 +167,7 @@ canvas{aspect-ratio:3/4;height:min(53vh,115vw);background:#0d0616;border:3px sol
 <div id="game" hidden><div id="bar"><button class="btn" id="back">◀ Games</button><div id="title"></div><div class="gamehud"><span id="gameclock">5:00</span><span id="score" aria-live="polite"></span></div></div><div id="stage"></div></div>
 </div>
 <div id="attract" role="button" tabindex="0" aria-label="Start the arcade"><div class="panel"><div class="eyebrow">Cyber &amp; IT Lab presents</div><h2>Trades &amp; Treats</h2><p>Step into the Haunted Arcade</p><span class="attracttop" id="attracttop">Be the first challenger!</span><span class="tap">Tap anywhere to start</span></div></div>
-<div id="join" hidden><div class="panel"><div class="eyebrow">Five-minute challenge</div><h2>Who dares to play?</h2><p>Enter up to three initials. Finish different games to collect as many treats as you can before time runs out.</p><div class="rules"><span>5:00 on the clock</span><span>1 treat per different game</span><span>Top 10 make the board</span></div><form id="joinform"><label for="initials" class="eyebrow">Your initials</label><input id="initials" name="initials" maxlength="3" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text" placeholder="ABC" aria-describedby="joinhelp"><div id="joinhelp" hidden>Please try different initials.</div><button class="btn" id="joinstart" type="submit" disabled>Start my 5 minutes</button></form></div></div>
+<div id="join" hidden><div class="panel"><div class="eyebrow">Five-minute challenge</div><h2>Who dares to play?</h2><p>Enter up to three initials. Finish different games to collect as many treats as you can before time runs out.</p><div class="rules"><span>5:00 on the clock</span><span>1 treat per different game</span><span>Top 10 make the board</span></div><form id="joinform"><label for="initials" class="eyebrow">Your initials</label><input id="initials" name="initials" maxlength="3" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="none" readonly placeholder="ABC" aria-describedby="joinhelp"><div id="initialkbd" aria-label="On-screen initials keyboard"></div><div id="joinhelp" hidden>Please try different initials.</div><button class="btn" id="joinstart" type="submit" disabled>Start my 5 minutes</button></form></div></div>
 <div id="board" hidden><div class="panel"><div class="eyebrow">Five-minute challenge</div><h2 id="boardtitle">Leaderboard</h2><p class="finalscore" id="finalscore" hidden></p><div class="leaderlist" id="leaderlist"></div><div class="ov-actions"><button class="btn" id="boardclose" style="background:var(--pu);color:#fff">Back to games</button><button class="btn" id="nextplayer" hidden>Next player</button></div></div></div>
 <script>
 const $=(q,r=document)=>r.querySelector(q),R=n=>Math.random()*n|0,sh=a=>a.sort(()=>Math.random()-.5);
@@ -283,6 +339,8 @@ if(!document.documentElement.requestFullscreen)$('#full').hidden=true;
 $('#full').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch(e){}};
 document.addEventListener('fullscreenchange',()=>{$('#full').textContent=document.fullscreenElement?'Exit full screen':'Full screen'});
 const attract=$('#attract'),join=$('#join'),board=$('#board'),initials=$('#initials');
+const KEY_ROWS=['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
+$('#initialkbd').innerHTML=KEY_ROWS.map(row=>`<div class="keyrow">${[...row].map(key=>`<button class="key" type="button" data-key="${key}" aria-label="Letter ${key}">${key}</button>`).join('')}</div>`).join('')+`<div class="keyrow"><button class="key wide" type="button" data-key="clear">Clear</button><button class="key wide" type="button" data-key="back" aria-label="Backspace">⌫ Back</button></div>`;
 const clockText=ms=>{const total=Math.ceil(ms/1000),m=Math.floor(total/60),s=total%60;return `${m}:${String(s).padStart(2,'0')}`};
 function tickSession(){if(!sessionActive)return;const left=Math.max(0,sessionEnd-Date.now()),text=clockText(left);$('#countdown').textContent=text;$('#gameclock').textContent=text;$('#countdown').classList.toggle('urgent',left<=60000);$('#gameclock').classList.toggle('urgent',left<=60000);if(left<=0)finishSession('Time’s up!')}
 function beginSession(name){player=name;treats=0;completed=new Set();sessionSaved=false;currentResultId='';sessionActive=true;sessionEnd=Date.now()+SESSION_MS;clearInterval(sessionTick);sessionTick=setInterval(tickSession,250);updateTreats();tickSession();join.hidden=true;board.hidden=true;home();beep(523,.08)}
@@ -296,6 +354,9 @@ function showAttract(){clearTimeout(boardAuto);clearInterval(sessionTick);stop()
 function setInitialsState(){const name=initials.value,isBlocked=blockedInitials(name);$('#joinstart').disabled=!name||isBlocked;$('#joinhelp').hidden=!isBlocked;initials.setAttribute('aria-invalid',String(isBlocked));return name&&!isBlocked}
 function startArcade(){if(!attract.hidden){attract.hidden=true;join.hidden=false;initials.value='';$('#joinhelp').hidden=true;initials.setAttribute('aria-invalid','false');$('#joinstart').disabled=true;requestAnimationFrame(()=>initials.focus())}}
 initials.oninput=()=>{initials.value=initials.value.toUpperCase().replace(/[^A-Z]/g,'').slice(0,3);setInitialsState()};
+function enterInitial(key){if(key==='clear')initials.value='';else if(key==='back')initials.value=initials.value.slice(0,-1);else if(initials.value.length<3)initials.value+=key;setInitialsState();initials.focus({preventScroll:true});beep(key==='back'||key==='clear'?360:740,.035)}
+$('#initialkbd').onclick=e=>{const key=e.target.closest('[data-key]')?.dataset.key;if(key)enterInitial(key)};
+document.addEventListener('keydown',e=>{if(join.hidden)return;if(/^[a-z]$/i.test(e.key)){e.preventDefault();enterInitial(e.key.toUpperCase())}else if(e.key==='Backspace'||e.key==='Delete'){e.preventDefault();enterInitial('back')}else if(e.key==='Escape'){e.preventDefault();enterInitial('clear')}else if(e.key==='Enter'&&setInitialsState()){e.preventDefault();$('#joinform').requestSubmit()}});
 $('#joinform').onsubmit=e=>{e.preventDefault();if(setInitialsState())beginSession(initials.value)};
 $('#leaders').onclick=()=>renderBoard(false);
 $('#boardclose').onclick=()=>{board.hidden=true};
